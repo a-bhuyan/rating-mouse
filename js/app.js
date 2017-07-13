@@ -31,13 +31,14 @@ var targetLocation = {lat: latVar, lng: lngVar};
 
 
 //=======================   EVENTS   =======================//
-
-
-
-
-
-
-
+var rating;
+var restaurantName;
+var streetNum;
+var newArray=[];
+var latestDate;
+var inspection_date;
+var score;
+var addressTry;
 
 
 
@@ -148,6 +149,13 @@ function setNewMarker () {
       infowindow.close();
       marker.setVisible(false);
       var place = autocomplete.getPlace();
+
+      //*******Grabbing the restaurant name from google api object
+      restaurantName=place.name;
+      //*******Grabbing the rating from google api object
+      rating=place.rating;    
+
+
       if (!place.geometry) {
         // User entered the name of a Place that was not suggested and
         // pressed the Enter key, or the Place Details request failed.
@@ -174,13 +182,84 @@ function setNewMarker () {
         ].join(' ');
       }
 
+      // Grabbing the street Number from the google api
+      streetNum = place.address_components[0] && place.address_components[0].short_name;
+      console.log(streetNum);
+
       infowindowContent.children['place-icon'].src = place.icon;
       infowindowContent.children['place-name'].textContent = place.name;
       //PLACE.NAME is where the string place name is stored
-      console.log(place.name);
       infowindowContent.children['place-address'].textContent = address;
-      console.log(address);
       infowindow.open(map, marker);
+    
+   /***********************************************************/
+  /******Constructing the ajax method for Austin 311 api*******/ 
+var status=false;
+     
+   $.ajax({
+    url: "https://data.austintexas.gov/resource/nguv-n54k.json?restaurant_name="+restaurantName,
+
+   type: "GET",
+    data: {      
+      "$$app_token" : "0Es7kBaUTwfCUw1s8Z9vBuapF"
+    }
+    }).done(function(data) {       
+   
+   // if the object is not null
+    if(data.length>0)
+    {
+      for(var i = 0; i < data.length; i++)
+      {
+      // addressTry is grabbing the address from the austin 311 api  
+      addressTry= data[i].address_address.substring(0, data[i].address_address.indexOf(" "));//+","+" "+data[i].address_city+","+" "+data[i].address_state+" "+data[i].address_zip+","+" "+"USA";      
+      //console.log(addressTry);
+      
+      //Checking two addresses from google api and austin 311 api are matching or not
+      if(addressTry===streetNum){ 
+
+          //grab all the inspection dates of the restaurant and push it into an array        
+          newArray.push(new Date(data[i].inspection_date));
+
+          //Get the latestDate among the inspection dates
+          latestDate = new Date(Math.max.apply(null, newArray));        
+          var inspectionDate=moment(latestDate).format("MMMM Do YYYY, h:mm:ss a")
+          status=true;
+        }      
+           
+     } 
+    if(status==false)
+    {
+       alert("No matching restaurant details in the Austin 311");
+    }
+     //Looping through the data of Austin api to get the the details of the restaurant         
+    
+   for(var i = 0; i < data.length; i++)
+   {
+        addressTry= data[i].address_address.substring(0, data[i].address_address.indexOf(" "));//data[i].address_address+","+" "+data[i].address_city+","+" "+data[i].address_state+" "+data[i].address_zip+","+" "+"USA";         
+        var newDatedate=new Date(data[i].inspection_date);        
+     if((addressTry===streetNum)&&(newDatedate.valueOf()==latestDate.valueOf())){
+         console.log("Here is our Matching restaurant and its score of latest inspection date");
+         console.log("good");
+         console.log(data[i].restaurant_name);
+         console.log(data[i].score);
+         console.log(inspectionDate);
+         console.log(rating);        
+      /**** Display the restaurant_name,score,rating,inspection date in the out html page***/ 
+      }
+      else{
+        console.log("no");
+      }
+    }
+
+  }
+  else{
+      alert("no matching data found");
+    } 
+
+}) ; 
+
+
+
     });
 
     // Sets a listener on a radio button to change the filter type on Places
