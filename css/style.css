@@ -297,6 +297,39 @@ a.pure-button-primary {
   width: 100%;
   float: right;
 }
+
+
+/*==== RESULTS PAGE ==============*/
+.restaurantName {
+  margin-top: 100px;
+  font-size: 30px;
+  border: solid;
+  padding: 20px;
+  color: #0289C3;
+  background-color: #A7C5D0;
+}
+
+.googleScore {
+font-size: 30px;  
+color: #D2A587;
+padding: 20px;
+
+}
+
+.healthRating {
+font-size: 30px;
+color: #D2A587;
+padding: 20px;
+}
+
+.inspectDate{
+font-size: 20px;
+padding: 20px;
+color: #A7C5D0;
+}
+
+
+
 /* Optional: Makes the sample page fill the window. */
 html, body {
   height: 100%;
@@ -353,6 +386,10 @@ html, body {
 }
 
 #pac-input {
+  margin-top: 40px;
+  margin-right: 10px;
+  margin-left: 20px;
+  border: 3px solid rgb(144, 189, 255);
   background-color: #fff;
   font-family: Roboto;
   font-size: 15px;
@@ -360,8 +397,11 @@ html, body {
   /*margin-left: 200px;*/
   padding: 0 11px 0 13px;
   text-overflow: ellipsis;
-  width: 400px;
+  width: 350px;
+  height: 40px;
+  border-radius: 10px;
 }
+
 
 #pac-input:focus {
   border-color: #4d90fe;
