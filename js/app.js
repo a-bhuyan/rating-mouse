@@ -246,7 +246,7 @@ var status=false;
        $(".inspectDate").html(""); 
        $(".healthRating").html(""); 
 
-      $("#map").css({ "width": "100%"});
+      //$("#map").css({ "width": "100%"});
       //alert("No matching restaurant details in the Austin 311");
 
     }
