@@ -1,6 +1,14 @@
 //==========================   DATABASE   ==========================//
 
-
+var config = {
+    apiKey: "AIzaSyCPeD_m4M-00LiLAVvRE7Gzdizim2qDD4A",
+    authDomain: "anaproject-4cb91.firebaseapp.com",
+    databaseURL: "https://anaproject-4cb91.firebaseio.com",
+    projectId: "anaproject-4cb91",
+    storageBucket: "anaproject-4cb91.appspot.com",
+    messagingSenderId: "78796771551"
+  };
+  firebase.initializeApp(config);
 
 
 
