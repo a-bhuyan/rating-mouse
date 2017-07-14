@@ -33,7 +33,7 @@ var targetLocation = {lat: latVar, lng: lngVar};
 var rating;
 var restaurantName;
 var streetNum;
-var newArray=[];
+var newArray;
 var latestDate;
 var inspection_date;
 var score;
@@ -166,6 +166,8 @@ function setNewMarker () {
         return;
       }
 
+      // Clearing the seach box input after each search
+       $("#pac-input").val("");
       // If the place has a geometry, then present it on a map.
       if (place.geometry.viewport) {
         map.fitBounds(place.geometry.viewport);
@@ -208,8 +210,9 @@ var status=false;
     data: {      
       "$$app_token" : "0Es7kBaUTwfCUw1s8Z9vBuapF"
     }
-    }).done(function(data) {       
-   
+    }).done(function(data) { 
+    /*** Empty the array****/      
+   newArray=[];
    // if the object is not null
     if(data.length>0)
     {
@@ -229,12 +232,23 @@ var status=false;
           latestDate = new Date(Math.max.apply(null, newArray));        
           var inspectionDate=moment(latestDate).format("MMMM Do YYYY, h:mm:ss a")
           status=true;
+          $("#map").css({ "width": "50%"});
         }      
            
      } 
     if(status==false)
     {
-       alert("No matching restaurant details in the Austin 311");
+
+       //alert("No matching restaurant details in the Austin 311");
+       //Added Error messages
+       $(".restaurantName").html("No matching data for the restaurant");
+       $(".googleScore").html(""); 
+       $(".inspectDate").html(""); 
+       $(".healthRating").html(""); 
+
+      //$("#map").css({ "width": "100%"});
+      //alert("No matching restaurant details in the Austin 311");
+
     }
      //Looping through the data of Austin api to get the the details of the restaurant         
     
@@ -266,7 +280,12 @@ var status=false;
 
   }
   else{
-      alert("no matching data found");
+      //alert("no matching data found");
+      //Added error messages
+       $(".restaurantName").html("Please search with a proper restaurant name");
+      $(".googleScore").html(""); 
+      $(".inspectDate").html(""); 
+      $(".healthRating").html(""); 
     } 
 
 }) ; 
