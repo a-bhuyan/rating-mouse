@@ -9,9 +9,49 @@ var config = {
     messagingSenderId: "78796771551"
   };
   firebase.initializeApp(config);
+  var database = firebase.database();
+  //var provider = new firebase.auth.GoogleAuthProvider();
+  //provider.addScope("profile");
+  //provider.addScope("email");
+
+$(".pure-button").on("click",function(){
+function submitCreateAccount(){
+    var displayName=document.querySelector("#name");
+    var email=document.querySelector("#email");
+    var password=document.querySelector("#password");
 
 
+firebase.auth().createUserWithEmailAndPassword(email.value,password.value)
+ .then(function(user){
+  user.updateProfile({displayName:displayName.value});
+ }).catch(function(error) {
+  // Handle Errors here.
+  var errorCode = error.code;
+  var errorMessage = error.message;
+});
+}
+});
 
+$(".sign-in").on("click",function(){
+    //var displayName=document.querySelector("#name");
+    var email=document.querySelector("#email1");
+    var password=document.querySelector("#password1");
+
+ firebase.auth().signInWithEmailAndPassword(email.value, password.value).catch(function(error) {
+  // Handle Errors here.
+  var errorCode = error.code;
+  var errorMessage = error.message;
+  // ...
+});
+
+
+firebase.auth().onAuthStateChanged(function(user) {
+        if (user) {
+          // User is logged in
+        } else {
+          // User isn't logged in
+        }
+});
 
 //==========================   VARIABLES   ==========================//
 //------------------   Google Geolocation Variables   ------------------//
