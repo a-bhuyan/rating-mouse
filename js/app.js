@@ -249,10 +249,10 @@ var status=false;
          console.log(rating);        
 
       
-      $(".restaurantName").append(data[i].restaurant_name);  
-      $(".googleScore").append("Google User Rating: " + rating) 
-      $(".inspectDate").append("Inspection Date: " + inspectionDate); 
-      $(".healthRating").append("Health Inspector Rating: " + data[i].score);  
+      $(".restaurantName").html(data[i].restaurant_name);  
+      $(".googleScore").html("Google User Rating: " + rating) 
+      $(".inspectDate").html("Inspection Date: " + inspectionDate); 
+      $(".healthRating").html("Health Inspector Rating: " + data[i].score);  
 
 
       /**** Display the restaurant_name,score,rating,inspection date in the out html page***/ 
