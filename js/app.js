@@ -1,4 +1,3 @@
-
 //==========================   DATABASE   ==========================//
 
 
@@ -146,9 +145,13 @@ function setNewMarker () {
     });
 
     autocomplete.addListener('place_changed', function() {
+
       infowindow.close();
       marker.setVisible(false);
       var place = autocomplete.getPlace();
+
+       $("#map").css({ "width": "50%"});
+     
 
       //*******Grabbing the restaurant name from google api object
       restaurantName=place.name;
@@ -244,6 +247,14 @@ var status=false;
          console.log(data[i].score);
          console.log(inspectionDate);
          console.log(rating);        
+
+      
+      $(".restaurantName").append(data[i].restaurant_name);  
+      $(".googleScore").append("Google User Rating: " + rating) 
+      $(".inspectDate").append("Inspection Date: " + inspectionDate); 
+      $(".healthRating").append("Health Inspector Rating: " + data[i].score);  
+
+
       /**** Display the restaurant_name,score,rating,inspection date in the out html page***/ 
       }
       else{
@@ -264,25 +275,25 @@ var status=false;
 
     // Sets a listener on a radio button to change the filter type on Places
     // Autocomplete.
-    function setupClickListener(id, types) {
-      var radioButton = document.getElementById(id);
-      radioButton.addEventListener('click', function() {
-        autocomplete.setTypes(types);
-      });
-    }
+    // function setupClickListener(id, types) {
+    //   var radioButton = document.getElementById(id);
+    //   radioButton.addEventListener('click', function() {
+    //     autocomplete.setTypes(types);
+    //   });
+    // }
 
-    setupClickListener('changetype-all', []);
-    setupClickListener('changetype-address', ['address']);
-    setupClickListener('changetype-establishment', ['establishment']);
-    setupClickListener('changetype-geocode', ['geocode']);
+    // setupClickListener('changetype-all', []);
+    // setupClickListener('changetype-address', ['address']);
+    // setupClickListener('changetype-establishment', ['establishment']);
+    // setupClickListener('changetype-geocode', ['geocode']);
 
-    document.getElementById('use-strict-bounds')
-      .addEventListener('click', function() {
-        console.log('Checkbox clicked! New state=' + this.checked);
-        autocomplete.setOptions({
-          strictBounds: this.checked
-        });
-      });
+    // document.getElementById('use-strict-bounds')
+    //   .addEventListener('click', function() {
+    //     console.log('Checkbox clicked! New state=' + this.checked);
+    //     autocomplete.setOptions({
+    //       strictBounds: this.checked
+    //     });
+    //   });
   }
 
 
