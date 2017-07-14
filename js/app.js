@@ -232,17 +232,23 @@ var status=false;
           latestDate = new Date(Math.max.apply(null, newArray));        
           var inspectionDate=moment(latestDate).format("MMMM Do YYYY, h:mm:ss a")
           status=true;
+          $("#map").css({ "width": "50%"});
         }      
            
      } 
     if(status==false)
     {
+
        //alert("No matching restaurant details in the Austin 311");
        //Added Error messages
        $(".restaurantName").html("No matching data for the restaurant");
        $(".googleScore").html(""); 
        $(".inspectDate").html(""); 
        $(".healthRating").html(""); 
+
+      $("#map").css({ "width": "100%"});
+      //alert("No matching restaurant details in the Austin 311");
+
     }
      //Looping through the data of Austin api to get the the details of the restaurant         
     
