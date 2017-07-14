@@ -182,11 +182,13 @@ function setNewMarker () {
           (place.address_components[0] && place.address_components[0].short_name || ''),
           (place.address_components[1] && place.address_components[1].short_name || ''),
           (place.address_components[2] && place.address_components[2].short_name || '')
+          
         ].join(' ');
       }
 
       // Grabbing the street Number from the google api
       streetNum = place.address_components[0] && place.address_components[0].short_name;
+      console.log(place);
       console.log(streetNum);
 
       infowindowContent.children['place-icon'].src = place.icon;
