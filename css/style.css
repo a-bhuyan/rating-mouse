@@ -25,6 +25,13 @@ label {
     color: #34495e;
 }
 
+button {
+  background-color: rgb(144, 189, 255);
+  color: white;
+  border: 3px solid rgb(144, 189, 255);
+  border-radius: 10px;
+}
+
 .pure-img-responsive {
     max-width: 100%;
     height: auto;
@@ -397,8 +404,8 @@ html, body {
   /*margin-left: 200px;*/
   padding: 0 11px 0 13px;
   text-overflow: ellipsis;
-  width: 350px;
-  height: 45px;
+  width: 300px;
+  height: 40px;
   border-radius: 10px;
 }
 
@@ -414,5 +421,3 @@ html, body {
   font-weight: 500;
   padding: 6px 12px;
 }
-
-
