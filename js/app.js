@@ -10,49 +10,51 @@ var config = {
   };
   firebase.initializeApp(config);
   var database = firebase.database();
-  //var provider = new firebase.auth.GoogleAuthProvider();
-  //provider.addScope("profile");
-  //provider.addScope("email");
-
-$(".pure-button").on("click",function(){
-function submitCreateAccount(){
-    var displayName=document.querySelector("#name");
-    var email=document.querySelector("#email");
-    var password=document.querySelector("#password");
-
-
-firebase.auth().createUserWithEmailAndPassword(email.value,password.value)
- .then(function(user){
-  user.updateProfile({displayName:displayName.value});
- }).catch(function(error) {
+  
+var displayName;
+$("#signup").on("click",function(){
+  displayName=$("#name").val();
+    var email=$("#email").val();
+    var password=$("#password").val();
+   firebase.auth().createUserWithEmailAndPassword(email,password)
+    .then(function(user){
+      user.updateProfile({displayName:displayName});
+      console.log(user);}).
+      catch(function(error) {
   // Handle Errors here.
   var errorCode = error.code;
   var errorMessage = error.message;
 });
-}
 });
 
-$(".sign-in").on("click",function(){
+$("#signIn").on("click",function(){
     //var displayName=document.querySelector("#name");
-    var email=document.querySelector("#email1");
-    var password=document.querySelector("#password1");
+    var email=$("#email").val();
+    var password=$("#password").val();
 
- firebase.auth().signInWithEmailAndPassword(email.value, password.value).catch(function(error) {
+ firebase.auth().signInWithEmailAndPassword(email, password).
+ catch(function(error) {
   // Handle Errors here.
   var errorCode = error.code;
   var errorMessage = error.message;
   // ...
 });
-
-
-firebase.auth().onAuthStateChanged(function(user) {
-        if (user) {
-          // User is logged in
-        } else {
-          // User isn't logged in
-        }
+ 
 });
 
+
+/*firebase.auth().onAuthStateChanged(function(user) {
+        if (user) {
+          console.log("user logged in");
+           displayName = user.displayName;
+           console.log(displayName);
+        } else {
+          // User isn't logged in
+          console.log("not loggrd in");
+        }
+});
+*/
+ 
 //==========================   VARIABLES   ==========================//
 //------------------   Google Geolocation Variables   ------------------//
 var map;
@@ -97,6 +99,7 @@ function initMap() {
     center: targetLocation,
     zoom: zoomVar,
     mapTypeId: mapTypeIdVar
+
   });
 
 
