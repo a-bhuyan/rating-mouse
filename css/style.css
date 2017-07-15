@@ -415,7 +415,4 @@ html, body {
   padding: 6px 12px;
 }
 
-.modal-body {
-    max-height: calc(100vh - 100px);
-    overflow: auto;
-}
+
