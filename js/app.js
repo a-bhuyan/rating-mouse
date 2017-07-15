@@ -1,10 +1,59 @@
 //==========================   DATABASE   ==========================//
 
+var config = {
+    apiKey: "AIzaSyCPeD_m4M-00LiLAVvRE7Gzdizim2qDD4A",
+    authDomain: "anaproject-4cb91.firebaseapp.com",
+    databaseURL: "https://anaproject-4cb91.firebaseio.com",
+    projectId: "anaproject-4cb91",
+    storageBucket: "anaproject-4cb91.appspot.com",
+    messagingSenderId: "78796771551"
+  };
+  firebase.initializeApp(config);
+  var database = firebase.database();
+  
+var displayName;
+$("#signup").on("click",function(){
+  displayName=$("#name").val();
+    var email=$("#email").val();
+    var password=$("#password").val();
+   firebase.auth().createUserWithEmailAndPassword(email,password)
+    .then(function(user){
+      user.updateProfile({displayName:displayName});
+      console.log(user);}).
+      catch(function(error) {
+  // Handle Errors here.
+  var errorCode = error.code;
+  var errorMessage = error.message;
+});
+});
+
+$("#signIn").on("click",function(){
+    //var displayName=document.querySelector("#name");
+    var email=$("#email").val();
+    var password=$("#password").val();
+ firebase.auth().signInWithEmailAndPassword(email, password).
+ catch(function(error) {
+  // Handle Errors here.
+  var errorCode = error.code;
+  var errorMessage = error.message;
+  // ...
+});
+ 
+});
 
 
-
-
-
+/*firebase.auth().onAuthStateChanged(function(user) {
+        if (user) {
+          console.log("user logged in");
+           displayName = user.displayName;
+           console.log(displayName);
+        } else {
+          // User isn't logged in
+          console.log("not loggrd in");
+        }
+});
+*/
+ 
 //==========================   VARIABLES   ==========================//
 //------------------   Google Geolocation Variables   ------------------//
 var map;
@@ -49,6 +98,7 @@ function initMap() {
     center: targetLocation,
     zoom: zoomVar,
     mapTypeId: mapTypeIdVar
+
   });
 
 
