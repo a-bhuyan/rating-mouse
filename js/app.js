@@ -10,13 +10,13 @@ var config = {
   };
   firebase.initializeApp(config);
   var database = firebase.database();
-  
+  $(".btn-lg").hide();
 var displayName;
 $("#signup").on("click",function(){
-  displayName=$("#name").val();
+    displayName=$("#name").val();
     var email=$("#email").val();
     var password=$("#password").val();
-   firebase.auth().createUserWithEmailAndPassword(email,password)
+    firebase.auth().createUserWithEmailAndPassword(email,password)
     .then(function(user){
       user.updateProfile({displayName:displayName});
       console.log(user);}).
@@ -31,28 +31,42 @@ $("#signIn").on("click",function(){
     //var displayName=document.querySelector("#name");
     var email=$("#email").val();
     var password=$("#password").val();
- firebase.auth().signInWithEmailAndPassword(email, password).
- catch(function(error) {
-  // Handle Errors here.
-  var errorCode = error.code;
-  var errorMessage = error.message;
-  // ...
-});
- 
-});
+ firebase.auth().signInWithEmailAndPassword(email, password).catch(function(error) {
+          // Handle Errors here.
+          var errorCode = error.code;
+          var errorMessage = error.message;
+          // [START_EXCLUDE]
+          if (errorCode === 'auth/wrong-password') {
+            alert('Wrong password.');
+          } else {
+            alert(errorMessage);
+          }
+          console.log(error);
+  });    
+  });
 
+  $("#signOut").on("click", function () {
+    firebase.auth().signOut().then(function() {
+      //$('.content').hide();
+    }, function(error) {
+      // An error happened.
+    });
+    
+  });
 
-/*firebase.auth().onAuthStateChanged(function(user) {
+firebase.auth().onAuthStateChanged(function(user) {
         if (user) {
           console.log("user logged in");
            displayName = user.displayName;
+         document.getElementById("signOut").classList.remove("hide");
            console.log(displayName);
         } else {
           // User isn't logged in
-          console.log("not loggrd in");
+          console.log("not logged in");
+           document.getElementById("signOut").classList.add("hide");
         }
 });
-*/
+
  
 //==========================   VARIABLES   ==========================//
 //------------------   Google Geolocation Variables   ------------------//
@@ -332,7 +346,7 @@ var status=false;
   else{
       //alert("no matching data found");
       //Added error messages
-       $(".restaurantName").html("Please search with a proper restaurant name");
+       $(".restaurantName").html("Data Unavailable");
       $(".googleScore").html(""); 
       $(".inspectDate").html(""); 
       $(".healthRating").html(""); 
