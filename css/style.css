@@ -316,23 +316,37 @@ a.pure-button-primary {
   background-color: #A7C5D0;
 }
 
-.googleScore {
-font-size: 30px;
-color: #D2A587;
+.googleScore,
+.healthRating {
+font-size: 50px;
+color: #F38630;
 padding: 20px;
-
+margin:30px;
+display: inline-block;
+border: solid;
+background: #E0E4CC;
+position: relative;
+float: left;
 }
 
-.healthRating {
-font-size: 30px;
-color: #D2A587;
-padding: 20px;
+
+.gScore {
+  position: absolute;
+  color: #F38630;
+  left:10px;
+}
+
+.aRating {
+  position: absolute;
+  color: #F38630;
+  left: 180px;
 }
 
 .inspectDate{
 font-size: 20px;
 padding: 20px;
 color: #A7C5D0;
+display: inline-block;
 }
 
 
