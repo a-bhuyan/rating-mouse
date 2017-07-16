@@ -201,6 +201,11 @@ function setNewMarker () {
       var place = autocomplete.getPlace();
 
        $("#map").css({ "width": "50%"});
+
+    $(".gScore").show();
+    $(".aRating").show();
+    $(".googleScore").show();
+    $(".healthRating").show();
      
 
       //*******Grabbing the restaurant name from google api object
@@ -296,7 +301,12 @@ var status=false;
        $(".inspectDate").html(""); 
        $(".healthRating").html(""); 
 
-      //$("#map").css({ "width": "100%"});
+    $(".gScore").hide();
+    $(".aRating").hide();
+    $(".googleScore").hide();
+    $(".healthRating").hide();
+
+      // $("#map").css({ "width": "100%"});
       //alert("No matching restaurant details in the Austin 311");
 
     }
@@ -316,9 +326,12 @@ var status=false;
 
       
       $(".restaurantName").html(data[i].restaurant_name);  
-      $(".googleScore").html("Google User Rating: " + rating) 
+      $(".googleScore").html(rating) 
       $(".inspectDate").html("Inspection Date: " + inspectionDate); 
-      $(".healthRating").html("Health Inspector Rating: " + data[i].score);  
+      $(".healthRating").html(data[i].score);  
+
+      $(".gScore").text("Google User Rating");
+      $(".aRating").text("Health Inspector Rating");
 
 
       /**** Display the restaurant_name,score,rating,inspection date in the out html page***/ 
@@ -336,7 +349,15 @@ var status=false;
       $(".googleScore").html(""); 
       $(".inspectDate").html(""); 
       $(".healthRating").html(""); 
+
+    $(".gScore").hide();
+    $(".aRating").hide();
+    $(".googleScore").hide();
+    $(".healthRating").hide();
+
     } 
+
+
 
 }) ; 
 
