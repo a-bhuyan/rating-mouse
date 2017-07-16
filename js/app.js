@@ -1,57 +1,5 @@
 //==========================   DATABASE   ==========================//
 var config = {
-
-    apiKey: "AIzaSyCPeD_m4M-00LiLAVvRE7Gzdizim2qDD4A",
-    authDomain: "anaproject-4cb91.firebaseapp.com",
-    databaseURL: "https://anaproject-4cb91.firebaseio.com",
-    projectId: "anaproject-4cb91",
-    storageBucket: "anaproject-4cb91.appspot.com",
-    messagingSenderId: "78796771551"
-  };
-  firebase.initializeApp(config);
-  
-  var displayName;
-
-  $("#signup").on("click",function(){
-    
-    displayName=$("#name").val();
-    var email=$("#email").val();
-    var password=$("#password").val();
-    console.log(email);
-    console.log(password);
-
-    firebase.auth().createUserWithEmailAndPassword(email,password).catch(function(error) {
-  // Handle Errors here.
-  var errorCode = error.code;
-  var errorMessage = error.message;
-});
-    $("#name").val("");
-    $("#email").val("");
-    $("#password").val("");
-});
-
-$("#signIn").on("click",function(){
-    //var displayName=document.querySelector("#name");
-    var email=$("#email").val();
-    var password=$("#password").val();
- firebase.auth().signInWithEmailAndPassword(email, password).catch(function(error) {
-          // Handle Errors here.
-          var errorCode = error.code;
-          var errorMessage = error.message;
-          // [START_EXCLUDE]
-          if (errorCode === 'auth/wrong-password') {
-            alert('Wrong password.');
-          } else {
-            alert(errorMessage);
-          }
-          console.log(error);
-  });   
-    $("#name").val("");
-    $("#email").val("");
-    $("#password").val(""); 
-  });
-
-  /*
   apiKey: "AIzaSyCPeD_m4M-00LiLAVvRE7Gzdizim2qDD4A",
   authDomain: "anaproject-4cb91.firebaseapp.com",
   databaseURL: "https://anaproject-4cb91.firebaseio.com",
@@ -94,29 +42,10 @@ $("#signIn").on("click", function() {
   });
 
 });
-David old version check*/
 
 
-  $("#signOut").on("click", function () {
-    firebase.auth().signOut();
-    
-  });
 
 
-firebase.auth().onAuthStateChanged(function(user) {
-        if (user) {
-          console.log("user logged in");
-           displayName = user.displayName;
-         document.getElementById("signOut").classList.remove("hide");
-           console.log(displayName);
-        } else {
-          // User isn't logged in
-          console.log("not logged in");
-           document.getElementById("signOut").classList.add("hide");
-        }
-});
-
- 
 
 //==========================   VARIABLES   ==========================//
 //------------------   Google Geolocation Variables   ------------------//
@@ -325,11 +254,8 @@ function initMap() {
       map.setCenter(place.geometry.location);
       map.setZoom(17); // Why 17? Because it looks good.
     }
-    
     marker.setPosition(place.geometry.location);
     marker.setVisible(true);
-
-
 
     var address = '';
     if (place.address_components) {
@@ -452,7 +378,7 @@ function initMap() {
       } else {
         //alert("no matching data found");
         //Added error messages
-        $(".restaurantName").html("Data Unavailable");
+        $(".restaurantName").html("Please search with a proper restaurant name");
         $(".googleScore").html("");
         $(".inspectDate").html("");
         $(".healthRating").html("");
