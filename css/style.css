@@ -318,7 +318,7 @@ a.pure-button-primary {
 
 .googleScore,
 .healthRating {
-font-size: 50px;
+font-size: 50px;  
 color: #F38630;
 padding: 20px;
 margin:30px;
@@ -328,7 +328,6 @@ background: #E0E4CC;
 position: relative;
 float: left;
 }
-
 
 .gScore {
   position: absolute;
@@ -348,7 +347,6 @@ padding: 20px;
 color: #A7C5D0;
 display: inline-block;
 }
-
 
 
 /* Optional: Makes the sample page fill the window. */

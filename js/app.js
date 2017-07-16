@@ -226,10 +226,16 @@ function initMap() {
       "width": "50%"
     });
 
+
+       $("#map").css({ "width": "50%"});
+
+
     $(".gScore").show();
     $(".aRating").show();
     $(".googleScore").show();
     $(".healthRating").show();
+
+
 
 
     //*******Grabbing the restaurant name from google api object
@@ -245,6 +251,51 @@ function initMap() {
       return;
     }
 
+    }).done(function(data) { 
+    /*** Empty the array****/      
+   newArray=[];
+   // if the object is not null
+    if(data.length>0)
+    {
+      for(var i = 0; i < data.length; i++)
+      {
+      // addressTry is grabbing the address from the austin 311 api  
+      addressTry= data[i].address_address.substring(0, data[i].address_address.indexOf(" "));//+","+" "+data[i].address_city+","+" "+data[i].address_state+" "+data[i].address_zip+","+" "+"USA";      
+      //console.log(addressTry);
+      
+      //Checking two addresses from google api and austin 311 api are matching or not
+      if(addressTry===streetNum){ 
+
+          //grab all the inspection dates of the restaurant and push it into an array        
+          newArray.push(new Date(data[i].inspection_date));
+
+          //Get the latestDate among the inspection dates
+          latestDate = new Date(Math.max.apply(null, newArray));        
+          var inspectionDate=moment(latestDate).format("MMMM Do YYYY, h:mm:ss a")
+          status=true;
+          $("#map").css({ "width": "50%"});
+        }      
+           
+     } 
+    if(status==false)
+    {
+
+       //alert("No matching restaurant details in the Austin 311");
+       //Added Error messages
+       $(".restaurantName").html("No matching data for the restaurant");
+       $(".googleScore").html(""); 
+       $(".inspectDate").html(""); 
+       $(".healthRating").html(""); 
+
+    $(".gScore").hide();
+    $(".aRating").hide();
+    $(".googleScore").hide();
+    $(".healthRating").hide();
+
+      // $("#map").css({ "width": "100%"});
+      //alert("No matching restaurant details in the Austin 311");
+
+
     // Clearing the seach box input after each search
     $("#pac-input").val("");
     // If the place has a geometry, then present it on a map.
@@ -254,6 +305,7 @@ function initMap() {
       map.setCenter(place.geometry.location);
       map.setZoom(17); // Why 17? Because it looks good.
     }
+
     marker.setPosition(place.geometry.location);
     marker.setVisible(true);
 
@@ -263,6 +315,58 @@ function initMap() {
         (place.address_components[0] && place.address_components[0].short_name || ''),
         (place.address_components[1] && place.address_components[1].short_name || ''),
         (place.address_components[2] && place.address_components[2].short_name || '')
+
+     //Looping through the data of Austin api to get the the details of the restaurant         
+    
+   for(var i = 0; i < data.length; i++)
+   {
+        addressTry= data[i].address_address.substring(0, data[i].address_address.indexOf(" "));//data[i].address_address+","+" "+data[i].address_city+","+" "+data[i].address_state+" "+data[i].address_zip+","+" "+"USA";         
+        var newDatedate=new Date(data[i].inspection_date);        
+     if((addressTry===streetNum)&&(newDatedate.valueOf()==latestDate.valueOf())){
+         console.log("Here is our Matching restaurant and its score of latest inspection date");
+         console.log("good");
+         console.log(data[i].restaurant_name);
+         console.log(data[i].score);
+         console.log(inspectionDate);
+         console.log(rating);        
+
+      
+      $(".restaurantName").html(data[i].restaurant_name);  
+      $(".googleScore").html(rating) 
+      $(".inspectDate").html("Inspection Date: " + inspectionDate); 
+      $(".healthRating").html(data[i].score);  
+
+      $(".gScore").text("Google User Rating");
+      $(".aRating").text("Health Inspector Rating");
+
+
+      /**** Display the restaurant_name,score,rating,inspection date in the out html page***/ 
+      }
+      else{
+        console.log("no");
+      }
+    }
+
+  }
+  else{
+      //alert("no matching data found");
+      //Added error messages
+       $(".restaurantName").html("Please search with a proper restaurant name");
+      $(".googleScore").html(""); 
+      $(".inspectDate").html(""); 
+      $(".healthRating").html(""); 
+
+    $(".gScore").hide();
+    $(".aRating").hide();
+    $(".googleScore").hide();
+    $(".healthRating").hide();
+
+    } 
+
+
+
+}) ; 
+
 
       ].join(' ');
     }
