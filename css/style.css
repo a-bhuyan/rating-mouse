@@ -25,6 +25,13 @@ label {
     color: #34495e;
 }
 
+button {
+  background-color: rgb(144, 189, 255);
+  color: white;
+  border: 3px solid rgb(144, 189, 255);
+  border-radius: 10px;
+}
+
 .pure-img-responsive {
     max-width: 100%;
     height: auto;
@@ -309,23 +316,37 @@ a.pure-button-primary {
   background-color: #A7C5D0;
 }
 
-.googleScore {
-font-size: 30px;
-color: #D2A587;
+.googleScore,
+.healthRating {
+font-size: 50px;
+color: #F38630;
 padding: 20px;
-
+margin:30px;
+display: inline-block;
+border: solid;
+background: #E0E4CC;
+position: relative;
+float: left;
 }
 
-.healthRating {
-font-size: 30px;
-color: #D2A587;
-padding: 20px;
+
+.gScore {
+  position: absolute;
+  color: #F38630;
+  left:10px;
+}
+
+.aRating {
+  position: absolute;
+  color: #F38630;
+  left: 180px;
 }
 
 .inspectDate{
 font-size: 20px;
 padding: 20px;
 color: #A7C5D0;
+display: inline-block;
 }
 
 
@@ -397,8 +418,8 @@ html, body {
   /*margin-left: 200px;*/
   padding: 0 11px 0 13px;
   text-overflow: ellipsis;
-  width: 350px;
-  height: 45px;
+  width: 300px;
+  height: 40px;
   border-radius: 10px;
 }
 
