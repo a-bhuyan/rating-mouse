@@ -9,18 +9,17 @@ var config = {
     messagingSenderId: "78796771551"
   };
   firebase.initializeApp(config);
-  var database = firebase.database();
-  $(".btn-lg").hide();
-var displayName;
-$("#signup").on("click",function(){
+  
+  var displayName;
+
+  $("#signup").on("click",function(){
+    
     displayName=$("#name").val();
     var email=$("#email").val();
     var password=$("#password").val();
-    firebase.auth().createUserWithEmailAndPassword(email,password)
-    .then(function(user){
-      user.updateProfile({displayName:displayName});
-      console.log(user);}).
-      catch(function(error) {
+    console.log(email);
+    console.log(password);
+    firebase.auth().createUserWithEmailAndPassword(email,password).catch(function(error) {
   // Handle Errors here.
   var errorCode = error.code;
   var errorMessage = error.message;
@@ -46,11 +45,7 @@ $("#signIn").on("click",function(){
   });
 
   $("#signOut").on("click", function () {
-    firebase.auth().signOut().then(function() {
-      //$('.content').hide();
-    }, function(error) {
-      // An error happened.
-    });
+    firebase.auth().signOut();
     
   });
 
