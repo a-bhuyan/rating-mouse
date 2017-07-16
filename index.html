@@ -3,12 +3,13 @@
 
 <head>
   <meta charset="utf-8">
-  <title>RATING MOUSE || Restaurant Ratings</title>
+  <title>Sandbox</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="Production Build">
+  <meta name="description" content="Playing with APIs">
   <link rel="stylesheet" href="https://unpkg.com/purecss@1.0.0/build/pure-min.css" integrity="sha384-nn4HPE8lTHyVtfCBi5yW9d20FjT8BJwUXyWZT9InLYax14RDjBj46LmSztkmNP9w" crossorigin="anonymous">
   <link rel="stylesheet" href="https://unpkg.com/purecss@1.0.0/build/grids-responsive-min.css">
   <link rel="stylesheet" href="https://netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css">
+  <script src="https://cdn.jsdelivr.net/momentjs/2.12.0/moment.min.js"></script>
   <link rel="stylesheet" href="css/style.css">
 
   <!--[if lt IE 9]>
@@ -22,7 +23,6 @@
     <div class="home-menu pure-menu pure-menu-horizontal pure-menu-fixed">
       <a class="pure-menu-heading" href="">RatingMouse</a>
       <ul class="pure-menu-list">
-        <li class="pure-menu-item"><button id="current-location">Find Me!</button></li>
         <li class="pure-menu-item pure-menu-selected"><input id="pac-input" type="text" placeholder="Enter a Restaurant Name"></li>
         <li class="pure-menu-item"><a href="#" class="pure-menu-link">Sign Up</a></li>
       </ul>
@@ -43,15 +43,8 @@
 
     <div class="results">
       <div class= "restaurantName"> </div>
-      <div>
-        <div class= "googleScore">  </div>
-        <div class = "gScore"> </div>
-      </div>
-        
-      <div>
-        <div class = "healthRating"> </div>
-        <div class = "aRating"> </div>
-     </div>
+      <div class= "googleScore"> </div>
+      <div class = "healthRating"> </div>
       <div class = "inspectDate"> </div>
     </div>
   </div>
@@ -72,9 +65,7 @@
                     Find Great Places
                 </h3>
           <p>
-
-            Filter out places close to you based on their inspection scores. Explore new restaurants in your area! 
-
+            Phasellus eget enim eu lectus faucibus vestibulum. Suspendisse sodales pellentesque elementum.
           </p>
         </div>
         <div class="l-box pure-u-1 pure-u-md-1-2 pure-u-lg-1-4">
@@ -83,9 +74,7 @@
                     Know They're Clean
                 </h3>
           <p>
-
-            We use the latest government health inspection scores to keep you updated on the cleanliness of your favorite restaurants around Austin.
-
+            Phasellus eget enim eu lectus faucibus vestibulum. Suspendisse sodales pellentesque elementum.
           </p>
         </div>
         <div class="l-box pure-u-1 pure-u-md-1-2 pure-u-lg-1-4">
@@ -94,20 +83,16 @@
                     It's Your Health
                 </h3>
           <p>
-
-           Eat food that is good for you and feel good about restaurants you trust! Promote clean, healty eating into your lifestyle.  
-
+            Phasellus eget enim eu lectus faucibus vestibulum. Suspendisse sodales pellentesque elementum.
           </p>
         </div>
         <div class="l-box pure-u-1 pure-u-md-1-2 pure-u-lg-1-4">
           <h3 class="content-subhead">
                     <i class="fa fa-check-square-o"></i>
-                    Benefits
+                    It's Your Family
                 </h3>
           <p>
-
-            Simple Yelp and Google reviewers don't have the same access as city officials. Get a rating that goes beyond the taste of food and tests the quality of food.
-
+            Phasellus eget enim eu lectus faucibus vestibulum. Suspendisse sodales pellentesque elementum.
           </p>
         </div>
       </div>
@@ -122,14 +107,7 @@
         <h2 class="content-head content-head-ribbon">You want a great dining experience.</h2>
 
         <p>
-
-          We love the idea of clean, healthy eating and would love to be part of your dining experience. Simple search for health inspection ratings will enhance your food choices. 
-
-        </p>
-
-         <p> 
-        Gather around and enjoy a meal with your friends, family and loved ones! 
-
+          Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor.
         </p>
       </div>
     </div>
@@ -152,9 +130,7 @@
               <label for="password">Your Password</label>
               <input id="password" type="password" placeholder="Your Password">
 
-              <button type="submit" class="pure-button" id="signup">Sign Up</button>
-              <button type="submit" class="pure-button" id="signIn">Sign In</button>
-
+              <button type="submit" class="pure-button">Sign Up</button>
             </fieldset>
           </form>
         </div>
@@ -162,20 +138,19 @@
         <div class="l-box-lrg pure-u-1 pure-u-md-3-5">
           <h4>Contact Us</h4>
           <p>
-            
-            Any thoughts or suggestions? Let us know! We love hearing from our users. Please sign up for updates and feel free to leave us any feedback for improvement. 
-
+            Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
           </p>
 
           <h4>More Information</h4>
           <p>
-            We're exciting to be part of your eating adventures! Please visit us frequently and let us be part of your healthy, clean eating :) 
+            Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
           </p>
         </div>
       </div>
 
     </div>
     <!--=====================   END MARKETING CONTENT   =====================-->
+
 
 
     <!--=====================   BEGIN FOOTER   =====================-->
@@ -187,13 +162,13 @@
 
 
 
-    <script async defer
-    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyD1QofYhy96lKRV5Ur1NcYoML5jNQ4Kmgs&libraries=places&callback=initMap">
-    </script>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/4.1.3/firebase.js"></script>
-    <script src="https://cdn.jsdelivr.net/momentjs/2.12.0/moment.min.js"></script>
-    <script src="js/app.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyD1QofYhy96lKRV5Ur1NcYoML5jNQ4Kmgs&callback=initMap&libraries=places"
+    async defer></script>
+
+<script src="js/app.js"></script>
+<script src="https://cdn.jsdelivr.net/momentjs/2.12.0/moment.min.js"></script>
 </body>
 
 </html>
