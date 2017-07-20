@@ -1,57 +1,5 @@
 //==========================   DATABASE   ==========================//
 var config = {
-
-    apiKey: "AIzaSyCPeD_m4M-00LiLAVvRE7Gzdizim2qDD4A",
-    authDomain: "anaproject-4cb91.firebaseapp.com",
-    databaseURL: "https://anaproject-4cb91.firebaseio.com",
-    projectId: "anaproject-4cb91",
-    storageBucket: "anaproject-4cb91.appspot.com",
-    messagingSenderId: "78796771551"
-  };
-  firebase.initializeApp(config);
-  
-  var displayName;
-
-  $("#signup").on("click",function(){
-    
-    displayName=$("#name").val();
-    var email=$("#email").val();
-    var password=$("#password").val();
-    console.log(email);
-    console.log(password);
-
-    firebase.auth().createUserWithEmailAndPassword(email,password).catch(function(error) {
-  // Handle Errors here.
-  var errorCode = error.code;
-  var errorMessage = error.message;
-});
-    $("#name").val("");
-    $("#email").val("");
-    $("#password").val("");
-});
-
-$("#signIn").on("click",function(){
-    //var displayName=document.querySelector("#name");
-    var email=$("#email").val();
-    var password=$("#password").val();
- firebase.auth().signInWithEmailAndPassword(email, password).catch(function(error) {
-          // Handle Errors here.
-          var errorCode = error.code;
-          var errorMessage = error.message;
-          // [START_EXCLUDE]
-          if (errorCode === 'auth/wrong-password') {
-            alert('Wrong password.');
-          } else {
-            alert(errorMessage);
-          }
-          console.log(error);
-  });   
-    $("#name").val("");
-    $("#email").val("");
-    $("#password").val(""); 
-  });
-
-  /*
   apiKey: "AIzaSyCPeD_m4M-00LiLAVvRE7Gzdizim2qDD4A",
   authDomain: "anaproject-4cb91.firebaseapp.com",
   databaseURL: "https://anaproject-4cb91.firebaseio.com",
@@ -60,63 +8,70 @@ $("#signIn").on("click",function(){
   messagingSenderId: "78796771551"
 };
 firebase.initializeApp(config);
-var database = firebase.database();
 
 var displayName;
+
 $("#signup").on("click", function() {
+
   displayName = $("#name").val();
   var email = $("#email").val();
   var password = $("#password").val();
-  firebase.auth().createUserWithEmailAndPassword(email, password)
-    .then(function(user) {
-      user.updateProfile({
-        displayName: displayName
-      });
-      console.log(user);
-    }).
-  catch(function(error) {
+  console.log(email);
+  console.log(password);
+
+  firebase.auth().createUserWithEmailAndPassword(email, password).catch(function(error) {
     // Handle Errors here.
     var errorCode = error.code;
     var errorMessage = error.message;
   });
+  $("#name").val("");
+  $("#email").val("");
+  $("#password").val("");
 });
 
 $("#signIn").on("click", function() {
   //var displayName=document.querySelector("#name");
   var email = $("#email").val();
   var password = $("#password").val();
-  firebase.auth().signInWithEmailAndPassword(email, password).
-  catch(function(error) {
+  firebase.auth().signInWithEmailAndPassword(email, password).catch(function(error) {
     // Handle Errors here.
     var errorCode = error.code;
     var errorMessage = error.message;
-    // ...
+    // [START_EXCLUDE]
+    if (errorCode === 'auth/wrong-password') {
+      alert('Wrong password.');
+    } else {
+      alert(errorMessage);
+    }
+    console.log(error);
   });
+  $("#name").val("");
+  $("#email").val("");
+  $("#password").val("");
+});
+
+
+$("#signOut").on("click", function() {
+  firebase.auth().signOut();
 
 });
-David old version check*/
-
-
-  $("#signOut").on("click", function () {
-    firebase.auth().signOut();
-    
-  });
 
 
 firebase.auth().onAuthStateChanged(function(user) {
-        if (user) {
-          console.log("user logged in");
-           displayName = user.displayName;
-         document.getElementById("signOut").classList.remove("hide");
-           console.log(displayName);
-        } else {
-          // User isn't logged in
-          console.log("not logged in");
-           document.getElementById("signOut").classList.add("hide");
-        }
+  if (user) {
+    console.log("user logged in");
+    displayName = user.displayName;
+    document.getElementById("signOut").classList.remove("hide");
+    console.log(displayName);
+  } else {
+    // User isn't logged in
+    console.log("not logged in");
+    document.getElementById("signOut").classList.add("hide");
+  }
 });
 
- 
+
+
 
 //==========================   VARIABLES   ==========================//
 //------------------   Google Geolocation Variables   ------------------//
@@ -135,14 +90,7 @@ var latestDate;
 var inspection_date;
 var score;
 var addressTry;
-
-
-
-
-
-
-
-
+var scoreMarker;
 
 
 
@@ -185,7 +133,10 @@ $("#current-location").on("click",
         marker = new google.maps.Marker({
           position: pos,
           map: map,
-          title: 'You are here'
+          //label:"You are here",
+          title: 'You are here',
+          /**Added animation to the marker*/
+          animation: google.maps.Animation.BOUNCE
         });
 
         // infoWindow.setPosition(pos);
@@ -197,15 +148,41 @@ $("#current-location").on("click",
         service = new google.maps.places.PlacesService(map);
 
         service.nearbySearch({
-            location: pos,
-            radius: 1000,
-            type: ['restaurant']
-          }, callback);
+          location: pos,
+          radius: 1000,
+          type: ['restaurant']
+        }, callback);
+
+        service.nearbySearch({
+          location: pos,
+          radius: 1000,
+          type: ['bar']
+        }, callback);
+
+        service.nearbySearch({
+          location: pos,
+          radius: 1000,
+          type: ['cafe']
+        }, callback);
+
+        service.nearbySearch({
+          location: pos,
+          radius: 1000,
+          type: ['meal_takeaway']
+        }, callback);
+
+        service.nearbySearch({
+          location: pos,
+          radius: 1000,
+          type: ['bakery']
+        }, callback);
+
 
         //--------------   Handle errors   --------------
       }, function() {
         handleLocationError(true, infoWindow, map.getCenter());
       });
+
     } else {
       // Browser doesn't support Geolocation
       handleLocationError(false, infoWindow, map.getCenter());
@@ -229,26 +206,127 @@ function handleLocationError(browserHasGeolocation, infoWindow, pos) {
 
 //--------------   Callback for plotting nearby restuarants   --------------
 function callback(results, status) {
+  console.log(results);
+  console.log(results.length);
   if (status === google.maps.places.PlacesServiceStatus.OK) {
     for (var i = 0; i < results.length; i++) {
       createMarker(results[i]);
+
     }
   }
 }
 
 //--------------   Plotting markers for nearby restuarants   --------------
 function createMarker(place) {
-  var placeLoc = place.geometry.location;
-  var marker = new google.maps.Marker({
-    map: map,
-    position: place.geometry.location
-  });
+  console.log(place);
+  var restName = place.name
+  var addressMarker = place.vicinity;
+  var newAdd = addressMarker.substring(0, addressMarker.indexOf(" "));
+  console.log(newAdd);
 
-  google.maps.event.addListener(marker, 'click', function() {
-    infoWindow.setContent(place.name);
-    infoWindow.open(map, this);
+  /***Ajax call for setting inspection scores inside the marker ****/
+
+  $.ajax({
+    url: "https://data.austintexas.gov/resource/nguv-n54k.json?$q=" + restName,
+
+    type: "GET",
+    data: {
+      "$$app_token": "0Es7kBaUTwfCUw1s8Z9vBuapF"
+    }
+  }).done(function(data) {
+    /*** Empty the array****/
+    var newArray1 = [];
+
+    for (var i = 0; i < data.length; i++) {
+      // addressTry is grabbing the address from the austin 311 api
+      addressTry = data[i].address_address.substring(0, data[i].address_address.indexOf(" ")); //+","+" "+data[i].address_city+","+" "+data[i].address_state+" "+data[i].address_zip+","+" "+"USA";
+      console.log(addressTry);
+
+      //Checking two addresses from google api and austin 311 api are matching or not
+      if (addressTry === newAdd) {
+
+        //grab all the inspection dates of the restaurant and push it into an array
+        newArray1.push(new Date(data[i].inspection_date));
+
+        //Get the latestDate among the inspection dates
+        latestDate = new Date(Math.max.apply(null, newArray1));
+        var inspectionDate = moment(latestDate).format("MMMM Do YYYY, h:mm:ss a")
+
+      }
+
+    }
+    //Looping through the data of Austin api to get the the details of the restaurant
+
+    for (var i = 0; i < data.length; i++) {
+      addressTry = data[i].address_address.substring(0, data[i].address_address.indexOf(" ")); //data[i].address_address+","+" "+data[i].address_city+","+" "+data[i].address_state+" "+data[i].address_zip+","+" "+"USA";
+      var newDatedate = new Date(data[i].inspection_date);
+      if ((addressTry === newAdd) && (newDatedate.valueOf() == latestDate.valueOf())) {
+        console.log("Here is our Matching restaurant and its score of latest inspection date");
+        console.log(data[i].restaurant_name);
+        console.log(data[i].score);
+        console.log(inspectionDate);
+
+        scoreMarker = data[i].score;
+        var placeLoc = place.geometry.location;
+        var marker = new google.maps.Marker({
+          map: map,
+          position: place.geometry.location,
+          label: scoreMarker
+
+        });
+        google.maps.event.addListener(marker, 'click', function() {
+          infoWindow.setContent(place.name);
+          console.log(place.name);
+          infoWindow.open(map, this);
+
+
+          //Using media query match to determine whether to shrink map
+          var mq = window.matchMedia("(max-width: 768px)");
+
+          if(mq.matches) {
+            $("#map").css({
+              "top": "0px"
+            });
+
+            $("#map-block").css({
+              "width": "100%",
+              "height": "75%",
+              // "margin-top": "90px",
+              // "margin-right": "2%"
+            });
+          }else {
+            $("#map").css({
+              "top": "0px"
+            });
+
+            $("#map-block").css({
+              "width": "48%",
+              "height": "75%",
+              "margin-top": "90px",
+              "margin-right": "2%"
+            });
+          }
+
+
+
+          $("#details-block").show();
+          $("#marketing").hide();
+
+          $("#restaurantName").html(place.name);
+          $("#googleScore").html(place.rating);
+          $("#inspectDate").html("Inspection Date: " + inspectionDate);
+          $("#healthRating").html(this.label);
+          // $(".gScore").html("Google User Rating");
+          // $(".aRating").html("Health Inspector Rating");
+
+        });
+
+      }
+    }
+
   });
 }
+
 
 
 
@@ -293,14 +371,56 @@ function initMap() {
     marker.setVisible(false);
     var place = autocomplete.getPlace();
 
-    $("#map").css({
-      "width": "50%"
-    });
+    // $("#map").css({
+    //   "width": "50%"
+    // });
+    //
+    // $(".gScore").show();
+    // $(".aRating").show();
+    // $(".googleScore").show();
+    // $(".healthRating").show();
 
-    $(".gScore").show();
-    $(".aRating").show();
-    $(".googleScore").show();
-    $(".healthRating").show();
+    //Using media query match to determine whether to shrink map
+    var mq = window.matchMedia("(max-width: 768px)");
+
+    if(mq.matches) {
+      $("#map").css({
+        "top": "0px"
+      });
+
+      $("#map-block").css({
+        "width": "100%",
+        "height": "75%",
+        // "margin-top": "90px",
+        // "margin-right": "2%"
+      });
+    }else {
+      $("#map").css({
+        "top": "0px"
+      });
+
+      $("#map-block").css({
+        "width": "48%",
+        "height": "75%",
+        "margin-top": "90px",
+        "margin-right": "2%"
+      });
+    }
+
+    // $("#map").css({
+    //   "top": "0px"
+    // });
+    //
+    // $("#map-block").css({
+    //   "width": "48%",
+    //   "height": "75%",
+    //   "margin-top": "90px",
+    //   "margin-right": "2%"
+    // });
+
+    $("#details-block").show();
+    $("#marketing").hide();
+
 
 
     //*******Grabbing the restaurant name from google api object
@@ -325,11 +445,8 @@ function initMap() {
       map.setCenter(place.geometry.location);
       map.setZoom(17); // Why 17? Because it looks good.
     }
-    
     marker.setPosition(place.geometry.location);
     marker.setVisible(true);
-
-
 
     var address = '';
     if (place.address_components) {
@@ -355,23 +472,19 @@ function initMap() {
 
 
 
-
-
-
-
-
     //=======================   AUSTIN311 API  =======================//
 
     var status = false;
 
     $.ajax({
-      url: "https://data.austintexas.gov/resource/nguv-n54k.json?restaurant_name=" + restaurantName,
+      url: "https://data.austintexas.gov/resource/nguv-n54k.json?$q=" + restaurantName,
 
       type: "GET",
       data: {
         "$$app_token": "0Es7kBaUTwfCUw1s8Z9vBuapF"
       }
     }).done(function(data) {
+      console.log(data);
       /*** Empty the array****/
       newArray = [];
       // if the object is not null
@@ -391,9 +504,9 @@ function initMap() {
             latestDate = new Date(Math.max.apply(null, newArray));
             var inspectionDate = moment(latestDate).format("MMMM Do YYYY, h:mm:ss a")
             status = true;
-            $("#map").css({
-              "width": "50%"
-            });
+            // $("#map").css({
+            //   "width": "50%"
+            // });
           }
 
         }
@@ -401,15 +514,15 @@ function initMap() {
 
           //alert("No matching restaurant details in the Austin 311");
           //Added Error messages
-          $(".restaurantName").html("No matching data for the restaurant");
-          $(".googleScore").html("");
-          $(".inspectDate").html("");
-          $(".healthRating").html("");
+          $("#restaurantName").html("No matching data for the restaurant");
+          $("#googleScore").html("");
+          $("#inspectDate").html("");
+          $("#healthRating").html("");
 
-          $(".gScore").hide();
-          $(".aRating").hide();
-          $(".googleScore").hide();
-          $(".healthRating").hide();
+          // $(".gScore").hide();
+          // $(".aRating").hide();
+          // $(".googleScore").hide();
+          // $(".healthRating").hide();
 
           //$("#map").css({ "width": "100%"});
           //alert("No matching restaurant details in the Austin 311");
@@ -434,13 +547,13 @@ function initMap() {
             // $(".inspectDate").html("Inspection Date: " + inspectionDate);
             // $(".healthRating").html("Health Inspector Rating: " + data[i].score);
 
-            $(".restaurantName").html(data[i].restaurant_name);
-            $(".googleScore").html(rating);
-            $(".inspectDate").html("Inspection Date: " + inspectionDate);
-            $(".healthRating").html(data[i].score);
+            $("#restaurantName").html(data[i].restaurant_name);
+            $("#googleScore").html(rating);
+            $("#inspectDate").html("Inspection Date: " + inspectionDate);
+            $("#healthRating").html(data[i].score);
 
-            $(".gScore").html("Google User Rating");
-            $(".aRating").html("Health Inspector Rating");
+            // $(".gScore").html("Google User Rating");
+            // $(".aRating").html("Health Inspector Rating");
 
 
             /**** Display the restaurant_name,score,rating,inspection date in the out html page***/
@@ -452,10 +565,10 @@ function initMap() {
       } else {
         //alert("no matching data found");
         //Added error messages
-        $(".restaurantName").html("Data Unavailable");
-        $(".googleScore").html("");
-        $(".inspectDate").html("");
-        $(".healthRating").html("");
+        $("#restaurantName").html("Data Unavailable");
+        $("#googleScore").html("");
+        $("#inspectDate").html("");
+        $("#healthRating").html("");
 
         $(".gScore").hide();
         $(".aRating").hide();
@@ -468,7 +581,6 @@ function initMap() {
   });
 
 }
-
 
 
 
