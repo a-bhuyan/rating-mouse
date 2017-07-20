@@ -121,7 +121,7 @@ $("#current-location").on("click",
     });
 
     //--------------   My location   --------------
-    infoWindow = new google.maps.InfoWindow;
+    infoWindow = new google.maps.InfoWindow();
 
     if (navigator.geolocation) {
       navigator.geolocation.getCurrentPosition(function(position) {
@@ -219,7 +219,7 @@ function callback(results, status) {
 //--------------   Plotting markers for nearby restuarants   --------------
 function createMarker(place) {
   console.log(place);
-  var restName = place.name
+  var restName = place.name;
   var addressMarker = place.vicinity;
   var newAdd = addressMarker.substring(0, addressMarker.indexOf(" "));
   console.log(newAdd);
@@ -250,7 +250,7 @@ function createMarker(place) {
 
         //Get the latestDate among the inspection dates
         latestDate = new Date(Math.max.apply(null, newArray1));
-        var inspectionDate = moment(latestDate).format("MMMM Do YYYY, h:mm:ss a")
+        var inspectionDate = moment(latestDate).format("MMMM Do YYYY, h:mm:ss a");
 
       }
 
@@ -303,7 +303,8 @@ function createMarker(place) {
               "width": "48%",
               "height": "75%",
               "margin-top": "90px",
-              "margin-right": "2%"
+              "margin-right": "1%",
+              "margin-left": "1%"
             });
           }
 
@@ -403,7 +404,8 @@ function initMap() {
         "width": "48%",
         "height": "75%",
         "margin-top": "90px",
-        "margin-right": "2%"
+        "margin-right": "1%",
+        "margin-left": "1%"
       });
     }
 
@@ -502,7 +504,7 @@ function initMap() {
 
             //Get the latestDate among the inspection dates
             latestDate = new Date(Math.max.apply(null, newArray));
-            var inspectionDate = moment(latestDate).format("MMMM Do YYYY, h:mm:ss a")
+            var inspectionDate = moment(latestDate).format("MMMM Do YYYY, h:mm:ss a");
             status = true;
             // $("#map").css({
             //   "width": "50%"
@@ -582,6 +584,25 @@ function initMap() {
 
 }
 
+
+document.getElementsByTagName("BODY")[0].onresize = function() {
+     var mq = window.matchMedia("(max-width: 768px)");
+
+     if (mq.matches) {
+         $("#map").css({"top": "0px"});
+         $("#map-block").css({
+
+            "width": "100%", "height": "75%",
+            // "margin-top": "90px",
+            // "margin-right": "2%"
+         });
+     } else {
+         $("#map").css({"top": "0px"});
+
+         $("#map-block").css({"width": "48%", "height": "75%", "margin-top": "90px", "margin-right": "1%", "margin-left": "1%"});
+     }
+     console.log("testing");
+};
 
 
 
