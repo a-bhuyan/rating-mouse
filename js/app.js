@@ -91,6 +91,8 @@ var inspection_date;
 var score;
 var addressTry;
 var scoreMarker;
+var mq;
+var hasSearched = false;
 
 
 
@@ -149,7 +151,7 @@ $("#current-location").on("click",
 
         service.nearbySearch({
           location: pos,
-          radius: 1000,
+          radius: 3000,
           type: ['restaurant']
         }, callback);
 
@@ -279,9 +281,11 @@ function createMarker(place) {
           console.log(place.name);
           infoWindow.open(map, this);
 
+          map.setCenter(place.geometry.location);
+
 
           //Using media query match to determine whether to shrink map
-          var mq = window.matchMedia("(max-width: 768px)");
+          mq = window.matchMedia("(max-width: 768px)");
 
           if(mq.matches) {
             $("#map").css({
@@ -295,6 +299,7 @@ function createMarker(place) {
               // "margin-right": "2%"
             });
           }else {
+            hasSearched = true;
             $("#map").css({
               "top": "0px"
             });
@@ -315,7 +320,7 @@ function createMarker(place) {
 
           $("#restaurantName").html(place.name);
           $("#googleScore").html(place.rating);
-          $("#inspectDate").html("Inspection Date: " + inspectionDate);
+          $("#inspectDate").html("Inspection Date: " + inspectionDate.split(",")[0]);
           $("#healthRating").html(this.label);
           // $(".gScore").html("Google User Rating");
           // $(".aRating").html("Health Inspector Rating");
@@ -361,16 +366,20 @@ function initMap() {
   var infowindow = new google.maps.InfoWindow();
   var infowindowContent = document.getElementById('infowindow-content');
   infowindow.setContent(infowindowContent);
+  /**Added the listener***/
+  autocomplete.addListener('place_changed', function() {
+    
   var marker = new google.maps.Marker({
     map: map,
     anchorPoint: new google.maps.Point(0, -29)
   });
-
-  autocomplete.addListener('place_changed', function() {
+  
 
     infowindow.close();
     marker.setVisible(false);
     var place = autocomplete.getPlace();
+
+    hasSearched = true;
 
     // $("#map").css({
     //   "width": "50%"
@@ -382,7 +391,7 @@ function initMap() {
     // $(".healthRating").show();
 
     //Using media query match to determine whether to shrink map
-    var mq = window.matchMedia("(max-width: 768px)");
+    mq = window.matchMedia("(max-width: 768px)");
 
     if(mq.matches) {
       $("#map").css({
@@ -551,7 +560,7 @@ function initMap() {
 
             $("#restaurantName").html(data[i].restaurant_name);
             $("#googleScore").html(rating);
-            $("#inspectDate").html("Inspection Date: " + inspectionDate);
+            $("#inspectDate").html("Inspection Date: " + inspectionDate.split(",")[0]);
             $("#healthRating").html(data[i].score);
 
             // $(".gScore").html("Google User Rating");
@@ -585,8 +594,10 @@ function initMap() {
 }
 
 
-document.getElementsByTagName("BODY")[0].onresize = function() {
-     var mq = window.matchMedia("(max-width: 768px)");
+document.getElementsByTagName("body")[0].onresize = function() {
+    if(hasSearched === true) {
+
+     mq = window.matchMedia("(max-width: 768px)");
 
      if (mq.matches) {
          $("#map").css({"top": "0px"});
@@ -602,6 +613,7 @@ document.getElementsByTagName("BODY")[0].onresize = function() {
          $("#map-block").css({"width": "48%", "height": "75%", "margin-top": "90px", "margin-right": "1%", "margin-left": "1%"});
      }
      console.log("testing");
+    }
 };
 
 
